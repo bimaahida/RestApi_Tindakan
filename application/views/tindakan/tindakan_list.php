@@ -18,16 +18,11 @@
                 <tr>
                     <th width="80px">No</th>
 		    <th>Status</th>
-		    <th>Keluhan</th>
-		    <th>Id Dokter</th>
-		    <th>Nama Dokter</th>
-		    <th>Id Pasien</th>
-		    <th>Nama Pasien</th>
-		    <th>Tgl Tindakan</th>
-		    <th>Id Jenis Tindakan</th>
-		    <th>Jenis Tindakan</th>
-		    <th>Id Penyakit</th>
-		    <th>Resep</th>
+		    <th>Dokter</th>
+		    <th>Pasien</th>
+		    <th>Tanggal</th>
+		    <th>Tindakan</th>
+		    <th>Penyakit</th>
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
@@ -72,7 +67,7 @@
                         {
                             "data": "id_tindakan",
                             "orderable": false
-                        },{"data": "status"},{"data": "keluhan"},{"data": "id_dokter"},{"data": "nama_dokter"},{"data": "id_pasien"},{"data": "nama_pasien"},{"data": "tgl_tindakan"},{"data": "id_jenis_tindakan"},{"data": "jenis_tindakan"},{"data": "id_penyakit"},{"data": "resep"},
+                        },{"data": "status"},{"data": "nama_dokter"},{"data": "nama_pasien"},{"data": "tgl_tindakan"},{"data": "jenis_tindakan"},{"data": "penyakit"},
                         {
                             "data" : "action",
                             "orderable": false,

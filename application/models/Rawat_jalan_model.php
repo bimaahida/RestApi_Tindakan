@@ -17,10 +17,10 @@ class Rawat_jalan_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_rawat_jalan,id_tindakan,tgl_periksa');
+        $this->datatables->select('id_rawat_jalan,tgl_periksa,nama_pasien,nama_dokter,jenis_tindakan');
         $this->datatables->from('rawat_jalan');
         //add this line for join
-        //$this->datatables->join('table2', 'rawat_jalan.field = table2.field');
+        $this->datatables->join('tindakan', 'rawat_jalan.id_tindakan  = tindakan.id_tindakan');
         $this->datatables->add_column('action', anchor(site_url('rawat_jalan/read/$1'),'Read')." | ".anchor(site_url('rawat_jalan/update/$1'),'Update')." | ".anchor(site_url('rawat_jalan/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_rawat_jalan');
         return $this->datatables->generate();
     }
@@ -35,6 +35,7 @@ class Rawat_jalan_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
+        $this->datatables->join('tindakan', 'rawat_jalan.id_tindakan  = tindakan.id_tindakan');
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }

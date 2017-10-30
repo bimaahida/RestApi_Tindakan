@@ -47,8 +47,9 @@ class Penyakit extends CI_Controller
             'action' => site_url('penyakit/create_action'),
 	    'id_penyakit' => set_value('id_penyakit'),
 	    'penyakit' => set_value('penyakit'),
-	);
-        $this->load->view('penyakit/penyakit_form', $data);
+    );
+        $this->render['content']   = $this->load->view('penyakit/penyakit_form', $data, TRUE);
+        $this->load->view('template', $this->render);
     }
     
     public function create_action() 

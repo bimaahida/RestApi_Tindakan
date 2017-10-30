@@ -31,7 +31,10 @@ class Rawat_jalan extends CI_Controller
             $data = array(
 		'id_rawat_jalan' => $row->id_rawat_jalan,
 		'id_tindakan' => $row->id_tindakan,
-		'tgl_periksa' => $row->tgl_periksa,
+        'nama_pasien' => $row->nama_pasien,
+        'nama_dokter' => $row->nama_dokter,
+        'jenis_tindakan' => $row->jenis_tindakan,
+        'tgl_periksa' => $row->tgl_periksa,
         );
             $this->render['content']   = $this->load->view('rawat_jalan/rawat_jalan_read', $data, TRUE);
             $this->load->view('template', $this->render);

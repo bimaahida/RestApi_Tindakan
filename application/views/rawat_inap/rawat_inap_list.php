@@ -9,7 +9,6 @@
                 </div>
             </div>
             <div class="col-md-4 text-right">
-                <?php echo anchor(site_url('rawat_inap/create'), 'Create', 'class="btn btn-primary"'); ?>
 		<?php echo anchor(site_url('rawat_inap/excel'), 'Excel', 'class="btn btn-primary"'); ?>
 	    </div>
         </div>
@@ -17,12 +16,11 @@
             <thead>
                 <tr>
                     <th width="80px">No</th>
-		    <th>Id Tindakan</th>
-		    <th>Id Ruangan</th>
-		    <th>Ruangan</th>
-		    <th>Tgl Masuk</th>
-		    <th>Tgl Keluar</th>
-		    <th width="200px">Action</th>
+                    <th>Pasien</th>
+                    <th>Ruangan</th>
+                    <th>Tgl Masuk</th>
+                    <th>Tgl Keluar</th>
+                    <th width="200px">Action</th>
                 </tr>
             </thead>
 	    
@@ -66,7 +64,7 @@
                         {
                             "data": "id_rawat_inap",
                             "orderable": false
-                        },{"data": "id_tindakan"},{"data": "id_ruangan"},{"data": "ruangan"},{"data": "tgl_masuk"},{"data": "tgl_keluar"},
+                        },{"data": "nama_pasien"},{"data": "ruangan"},{"data": "tgl_masuk"},{"data": "tgl_keluar"},
                         {
                             "data" : "action",
                             "orderable": false,

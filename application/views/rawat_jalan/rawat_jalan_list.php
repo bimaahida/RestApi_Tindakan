@@ -8,7 +8,6 @@
                 </div>
             </div>
             <div class="col-md-4 text-right">
-                <?php echo anchor(site_url('rawat_jalan/create'), 'Create', 'class="btn btn-primary"'); ?>
 		<?php echo anchor(site_url('rawat_jalan/excel'), 'Excel', 'class="btn btn-primary"'); ?>
 	    </div>
         </div>
@@ -16,7 +15,7 @@
             <thead>
                 <tr>
                     <th width="80px">No</th>
-		    <th>Id Tindakan</th>
+		    <th>Nama</th>
 		    <th>Tgl Periksa</th>
 		    <th width="200px">Action</th>
                 </tr>
@@ -62,7 +61,7 @@
                         {
                             "data": "id_rawat_jalan",
                             "orderable": false
-                        },{"data": "id_tindakan"},{"data": "tgl_periksa"},
+                        },{"data": "nama_pasien"},{"data": "tgl_periksa"},
                         {
                             "data" : "action",
                             "orderable": false,

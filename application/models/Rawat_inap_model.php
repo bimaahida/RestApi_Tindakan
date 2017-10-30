@@ -17,10 +17,10 @@ class Rawat_inap_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_rawat_inap,id_tindakan,id_ruangan,ruangan,tgl_masuk,tgl_keluar');
+        $this->datatables->select('id_rawat_inap,rawat_inap.id_tindakan,id_ruangan,ruangan,tgl_masuk,tgl_keluar,nama_pasien');
         $this->datatables->from('rawat_inap');
         //add this line for join
-        //$this->datatables->join('table2', 'rawat_inap.field = table2.field');
+        $this->datatables->join('tindakan', 'rawat_inap.id_tindakan = tindakan.id_tindakan');
         $this->datatables->add_column('action', anchor(site_url('rawat_inap/read/$1'),'Read')." | ".anchor(site_url('rawat_inap/update/$1'),'Update')." | ".anchor(site_url('rawat_inap/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_rawat_inap');
         return $this->datatables->generate();
     }

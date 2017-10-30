@@ -17,10 +17,10 @@ class Tindakan_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_tindakan,status,keluhan,id_dokter,nama_dokter,id_pasien,nama_pasien,tgl_tindakan,id_jenis_tindakan,jenis_tindakan,id_penyakit,resep');
+        $this->datatables->select('id_tindakan,status,keluhan,id_dokter,nama_dokter,id_pasien,nama_pasien,tgl_tindakan,id_jenis_tindakan,jenis_tindakan,penyakit,resep');
         $this->datatables->from('tindakan');
         //add this line for join
-        //$this->datatables->join('table2', 'tindakan.field = table2.field');
+        $this->datatables->join('penyakit', 'tindakan.id_penyakit  = penyakit.id_penyakit ');
         $this->datatables->add_column('action', anchor(site_url('tindakan/read/$1'),'Read')." | ".anchor(site_url('tindakan/update/$1'),'Update')." | ".anchor(site_url('tindakan/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_tindakan');
         return $this->datatables->generate();
     }
@@ -34,7 +34,7 @@ class Tindakan_model extends CI_Model
     
     // get data by id
     function get_by_id($id)
-    {
+    {   $this->db->join('penyakit', 'tindakan.id_penyakit  = penyakit.id_penyakit ');
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
@@ -80,6 +80,7 @@ class Tindakan_model extends CI_Model
     function insert($data)
     {
         $this->db->insert($this->table, $data);
+        return $this->db->insert_id();
     }
 
     // update data

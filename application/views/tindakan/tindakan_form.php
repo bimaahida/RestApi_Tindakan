@@ -21,13 +21,14 @@
             <label for="varchar">Nama Dokter <?php echo form_error('nama_dokter') ?></label>
             <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" placeholder="Nama Dokter" value="<?php echo $nama_dokter; ?>" />
         </div>
-	    <div class="form-group">
-            <label for="int">Id Pasien <?php echo form_error('id_pasien') ?></label>
-            <input type="text" class="form-control" name="id_pasien" id="id_pasien" placeholder="Id Pasien" value="<?php echo $id_pasien; ?>" />
-        </div>
-	    <div class="form-group">
-            <label for="varchar">Nama Pasien <?php echo form_error('nama_pasien') ?></label>
-            <input type="text" class="form-control" name="nama_pasien" id="nama_pasien" placeholder="Nama Pasien" value="<?php echo $nama_pasien; ?>" />
+        <div class="form-group">
+            <label for="int">Pasien <?php echo form_error('id_pasien') ?></label>
+            <select name="pasien" id="pasien" class="form-control" required="required">
+                <?php foreach ($data_pasien as $key) { ?>
+                    <option value="<?= $key->id?>"><?= $key->nama?></option>
+                <?php } ?>
+            </select>
+            
         </div>
 	    <div class="form-group">
             <label for="date">Tgl Tindakan <?php echo form_error('tgl_tindakan') ?></label>
