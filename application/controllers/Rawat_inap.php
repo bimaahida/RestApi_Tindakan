@@ -10,7 +10,8 @@ class Rawat_inap extends CI_Controller
         parent::__construct();
         $this->load->model('Rawat_inap_model');
         $this->load->library('form_validation');        
-	$this->load->library('datatables');
+    $this->load->library('datatables');
+    $this->load->library('curl'); 
     }
 
     public function index()
@@ -46,22 +47,32 @@ class Rawat_inap extends CI_Controller
 
     public function create() 
     {
+        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong'));
+        // var_dump($data_ruang);
         $data = array(
             'button' => 'Create',
             'action' => site_url('rawat_inap/create_action'),
-	    'id_rawat_inap' => set_value('id_rawat_inap'),
-	    'id_tindakan' => set_value('id_tindakan'),
-	    'id_ruangan' => set_value('id_ruangan'),
-	    'ruangan' => set_value('ruangan'),
-	    'tgl_masuk' => set_value('tgl_masuk'),
-	    'tgl_keluar' => set_value('tgl_keluar'),
-    );
+            'id_rawat_inap' => set_value('id_rawat_inap'),
+            'id_tindakan' => set_value('id_tindakan'),
+            'id_ruangan' => set_value('id_ruangan'),
+            'ruangan' => set_value('ruangan'),
+            'tgl_masuk' => set_value('tgl_masuk'),
+            'tgl_keluar' => set_value('tgl_keluar'),
+            'data_ruang' => $data_ruang,
+        );
         $this->render['content']   = $this->load->view('rawat_inap/rawat_inap_form', $data, TRUE);
         $this->load->view('template', $this->render);
     }
     
     public function create_action() 
     {
+        $id_ruangan = $this->input->post('id_ruangan',TRUE);    
+        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong?id='.$id_ruangan));
+        $nama_ruang = "";
+        foreach ($data_ruang as $key) {
+            $nama_ruang = $key->nama_ruang;
+        }
+        var_dump($id_ruangan);
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
@@ -69,8 +80,8 @@ class Rawat_inap extends CI_Controller
         } else {
             $data = array(
 		'id_tindakan' => $this->input->post('id_tindakan',TRUE),
-		'id_ruangan' => $this->input->post('id_ruangan',TRUE),
-		'ruangan' => $this->input->post('ruangan',TRUE),
+		'id_ruangan' => $id_ruangan,
+		'ruangan' => $nama_ruang,
 		'tgl_masuk' => $this->input->post('tgl_masuk',TRUE),
 		'tgl_keluar' => $this->input->post('tgl_keluar',TRUE),
 	    );
@@ -83,19 +94,21 @@ class Rawat_inap extends CI_Controller
     
     public function update($id) 
     {
+        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong'));
         $row = $this->Rawat_inap_model->get_by_id($id);
 
         if ($row) {
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('rawat_inap/update_action'),
-		'id_rawat_inap' => set_value('id_rawat_inap', $row->id_rawat_inap),
-		'id_tindakan' => set_value('id_tindakan', $row->id_tindakan),
-		'id_ruangan' => set_value('id_ruangan', $row->id_ruangan),
-		'ruangan' => set_value('ruangan', $row->ruangan),
-		'tgl_masuk' => set_value('tgl_masuk', $row->tgl_masuk),
-		'tgl_keluar' => set_value('tgl_keluar', $row->tgl_keluar),
-	    );
+                'id_rawat_inap' => set_value('id_rawat_inap', $row->id_rawat_inap),
+                'id_tindakan' => set_value('id_tindakan', $row->id_tindakan),
+                'id_ruangan' => set_value('id_ruangan', $row->id_ruangan),
+                'ruangan' => set_value('ruangan', $row->ruangan),
+                'tgl_masuk' => set_value('tgl_masuk', $row->tgl_masuk),
+                'tgl_keluar' => set_value('tgl_keluar', $row->tgl_keluar),
+                'data_ruang' => $data_ruang,
+            );
             $this->render['content']   = $this->load->view('rawat_inap/rawat_inap_form', $data, TRUE);
             $this->load->view('template', $this->render);
         } else {
@@ -108,13 +121,21 @@ class Rawat_inap extends CI_Controller
     {
         $this->_rules();
 
+        $id_ruangan = $this->input->post('id_ruangan',TRUE);    
+        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong?id='.$id_ruangan));
+
+        $nama_ruang = "";
+        foreach ($data_ruang as $key) {
+            $nama_ruang = $key->nama_ruang;
+        }
+
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_rawat_inap', TRUE));
         } else {
             $data = array(
 		'id_tindakan' => $this->input->post('id_tindakan',TRUE),
 		'id_ruangan' => $this->input->post('id_ruangan',TRUE),
-		'ruangan' => $this->input->post('ruangan',TRUE),
+		'ruangan' => $nama_ruang,
 		'tgl_masuk' => $this->input->post('tgl_masuk',TRUE),
 		'tgl_keluar' => $this->input->post('tgl_keluar',TRUE),
 	    );
@@ -143,7 +164,6 @@ class Rawat_inap extends CI_Controller
     {
 	$this->form_validation->set_rules('id_tindakan', 'id tindakan', 'trim|required');
 	$this->form_validation->set_rules('id_ruangan', 'id ruangan', 'trim|required');
-	$this->form_validation->set_rules('ruangan', 'ruangan', 'trim|required');
 	$this->form_validation->set_rules('tgl_masuk', 'tgl masuk', 'trim|required');
 	$this->form_validation->set_rules('tgl_keluar', 'tgl keluar', 'trim|required');
 

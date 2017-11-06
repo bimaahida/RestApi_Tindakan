@@ -13,19 +13,24 @@
             <label for="varchar">Keluhan <?php echo form_error('keluhan') ?></label>
             <textarea class="form-control" rows="3" name="keluhan" id="keluhan" placeholder="Keluhan"><?php echo $keluhan; ?></textarea>
         </div>
-	    <div class="form-group">
+	    <!-- <div class="form-group">
             <label for="int">Id Dokter <?php echo form_error('id_dokter') ?></label>
             <input type="text" class="form-control" name="id_dokter" id="id_dokter" placeholder="Id Dokter" value="<?php echo $id_dokter; ?>" />
-        </div>
+        </div> -->
 	    <div class="form-group">
             <label for="varchar">Nama Dokter <?php echo form_error('nama_dokter') ?></label>
-            <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" placeholder="Nama Dokter" value="<?php echo $nama_dokter; ?>" />
+            <select name="nama_dokter" id="nama_dokter" class="form-control" required="required">
+                <?php foreach ($data_dokter as $key) { ?>
+                    <option value="<?= $key->id_dokter?>"><?= $key->nama_dokter?></option>
+                <?php } ?>
+            </select>
+            <!-- <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" placeholder="Nama Dokter" value="<?php echo $nama_dokter; ?>" /> -->
         </div>
         <div class="form-group">
             <label for="int">Pasien <?php echo form_error('id_pasien') ?></label>
             <select name="pasien" id="pasien" class="form-control" required="required">
                 <?php foreach ($data_pasien as $key) { ?>
-                    <option value="<?= $key->id?>"><?= $key->nama?></option>
+                    <option value="<?= $key->id_pasien?>"><?= $key->nama_pasien?></option>
                 <?php } ?>
             </select>
             
@@ -34,13 +39,18 @@
             <label for="date">Tgl Tindakan <?php echo form_error('tgl_tindakan') ?></label>
             <input type="date" class="form-control" name="tgl_tindakan" id="tgl_tindakan" placeholder="Tgl Tindakan" value="<?php echo $tgl_tindakan; ?>" />
         </div>
-	    <div class="form-group">
+	    <!-- <div class="form-group">
             <label for="int">Id Jenis Tindakan <?php echo form_error('id_jenis_tindakan') ?></label>
             <input type="text" class="form-control" name="id_jenis_tindakan" id="id_jenis_tindakan" placeholder="Id Jenis Tindakan" value="<?php echo $id_jenis_tindakan; ?>" />
-        </div>
+        </div> -->
 	    <div class="form-group">
             <label for="varchar">Jenis Tindakan <?php echo form_error('jenis_tindakan') ?></label>
-            <input type="text" class="form-control" name="jenis_tindakan" id="jenis_tindakan" placeholder="Jenis Tindakan" value="<?php echo $jenis_tindakan; ?>" />
+            <select name="jenis_tindakan" id="jenis_tindakan" class="form-control" required="required">
+                <?php foreach ($data_tindakan as $key) { ?>
+                    <option value="<?= $key->id_jenis_tindakan?>"><?= $key->nama_jenis?></option>
+                <?php } ?>
+            </select>
+            <!-- <input type="text" class="form-control" name="jenis_tindakan" id="jenis_tindakan" placeholder="Jenis Tindakan" value="<?php echo $jenis_tindakan; ?>" /> -->
         </div>
 	    <div class="form-group">
             <label for="int">Id Penyakit <?php echo form_error('id_penyakit') ?></label>

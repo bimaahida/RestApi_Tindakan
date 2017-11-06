@@ -19,7 +19,7 @@ class Rawat_inap extends REST_Controller
         } else {
             $data =  $this->Rawat_inap_model->Api_get_rawat_inap_byid($id);
         }
-        var_dump($data);
-        //$this->response($data, 200);
+        //var_dump($data);
+        $this->response($data, 200);
     }
 }

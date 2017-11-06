@@ -1,17 +1,17 @@
 
         <h2 style="margin-top:0px">Rawat_inap <?php echo $button ?></h2>
         <form action="<?php echo $action; ?>" method="post">
-	    <div class="form-group">
+        <div class="form-group">
             <label for="int">Id Tindakan <?php echo form_error('id_tindakan') ?></label>
             <input type="text" class="form-control" name="id_tindakan" id="id_tindakan" placeholder="Id Tindakan" value="<?php echo $id_tindakan; ?>" readonly />
         </div>
-	    <div class="form-group">
-            <label for="int">Id Ruangan <?php echo form_error('id_ruangan') ?></label>
-            <input type="text" class="form-control" name="id_ruangan" id="id_ruangan" placeholder="Id Ruangan" value="<?php echo $id_ruangan; ?>" />
-        </div>
-	    <div class="form-group">
-            <label for="varchar">Ruangan <?php echo form_error('ruangan') ?></label>
-            <input type="text" class="form-control" name="ruangan" id="ruangan" placeholder="Ruangan" value="<?php echo $ruangan; ?>" />
+        <div class="form-group">
+        <label for="int">Ruangan <?php echo form_error('id_ruangan') ?></label>
+            <select name="id_ruangan" id="id_ruangan" class="form-control" required="required">
+                <?php foreach ($data_ruang as $key) { ?>
+                    <option value="<?= $key->id_jenis_ruang?>"><?= $key->nama_ruang?></option>
+                <?php }?>
+            </select>
         </div>
 	    <div class="form-group">
             <label for="date">Tgl Masuk <?php echo form_error('tgl_masuk') ?></label>

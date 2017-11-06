@@ -19,7 +19,7 @@ class Tindakan extends REST_Controller
         } else {
             $data =  $this->Tindakan_model->get_by_id($id);
         }
-        var_dump($data);
-        //$this->response($data, 200);
+        //var_dump($data);
+        $this->response($data, 200);
     }
 }
