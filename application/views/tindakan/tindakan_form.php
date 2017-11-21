@@ -21,7 +21,7 @@
             <label for="varchar">Nama Dokter <?php echo form_error('nama_dokter') ?></label>
             <select name="nama_dokter" id="nama_dokter" class="form-control" required="required">
                 <?php foreach ($data_dokter as $key) { ?>
-                    <option value="<?= $key->id_dokter?>"><?= $key->nama_dokter?></option>
+                    <option value="<?= $key->id_dokter?>" <?php if( $id_dokter == $key->id_dokter) echo'selected'; ?>><?= $key->nama_dokter?></option>
                 <?php } ?>
             </select>
             <!-- <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" placeholder="Nama Dokter" value="<?php echo $nama_dokter; ?>" /> -->
@@ -30,7 +30,7 @@
             <label for="int">Pasien <?php echo form_error('id_pasien') ?></label>
             <select name="pasien" id="pasien" class="form-control" required="required">
                 <?php foreach ($data_pasien as $key) { ?>
-                    <option value="<?= $key->id_pasien?>"><?= $key->nama_pasien?></option>
+                    <option value="<?= $key->id_pasien?>"<?php if( $id_pasien == $key->id_pasien) echo'selected'; ?> ><?= $key->nama_pasien?></option>
                 <?php } ?>
             </select>
             
@@ -47,7 +47,7 @@
             <label for="varchar">Jenis Tindakan <?php echo form_error('jenis_tindakan') ?></label>
             <select name="jenis_tindakan" id="jenis_tindakan" class="form-control" required="required">
                 <?php foreach ($data_tindakan as $key) { ?>
-                    <option value="<?= $key->id_jenis_tindakan?>"><?= $key->nama_jenis?></option>
+                    <option value="<?= $key->id_jenis_tindakan?>" <?php if( $id_jenis == $key->id_jenis_tindakan)?>><?= $key->jenis_tindakan?></option>
                 <?php } ?>
             </select>
             <!-- <input type="text" class="form-control" name="jenis_tindakan" id="jenis_tindakan" placeholder="Jenis Tindakan" value="<?php echo $jenis_tindakan; ?>" /> -->

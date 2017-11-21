@@ -80,7 +80,7 @@ class Penyakit extends CI_Controller
 		'id_penyakit' => set_value('id_penyakit', $row->id_penyakit),
 		'penyakit' => set_value('penyakit', $row->penyakit),
 	    );
-            $this->render['content']   = $this->load->view('penyakit/penyakit_read', $data, TRUE);
+            $this->render['content']   = $this->load->view('penyakit/penyakit_form', $data, TRUE);
             $this->load->view('template', $this->render);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

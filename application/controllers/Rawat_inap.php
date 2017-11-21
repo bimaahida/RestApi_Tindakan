@@ -47,7 +47,7 @@ class Rawat_inap extends CI_Controller
 
     public function create() 
     {
-        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong'));
+        $data_ruang = json_decode($this->curl->simple_get('http://192.168.10.2/ofbi/index.php/api/ruang_kosong'));
         // var_dump($data_ruang);
         $data = array(
             'button' => 'Create',
@@ -67,7 +67,7 @@ class Rawat_inap extends CI_Controller
     public function create_action() 
     {
         $id_ruangan = $this->input->post('id_ruangan',TRUE);    
-        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong?id='.$id_ruangan));
+        $data_ruang = json_decode($this->curl->simple_get('http://192.168.10.2/ofbi/index.php/api/ruang_kosong?id='.$id_ruangan));
         $nama_ruang = "";
         foreach ($data_ruang as $key) {
             $nama_ruang = $key->nama_ruang;
@@ -94,7 +94,7 @@ class Rawat_inap extends CI_Controller
     
     public function update($id) 
     {
-        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong'));
+        $data_ruang = json_decode($this->curl->simple_get('http://192.168.10.2/ofbi/index.php/api/ruang_kosong'));
         $row = $this->Rawat_inap_model->get_by_id($id);
 
         if ($row) {
@@ -122,7 +122,7 @@ class Rawat_inap extends CI_Controller
         $this->_rules();
 
         $id_ruangan = $this->input->post('id_ruangan',TRUE);    
-        $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong?id='.$id_ruangan));
+        $data_ruang = json_decode($this->curl->simple_get('http://192.168.10.2/ofbi/index.php/api/ruang_kosong?id='.$id_ruangan));
 
         $nama_ruang = "";
         foreach ($data_ruang as $key) {

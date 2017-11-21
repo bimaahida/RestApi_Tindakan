@@ -9,7 +9,7 @@
         <label for="int">Ruangan <?php echo form_error('id_ruangan') ?></label>
             <select name="id_ruangan" id="id_ruangan" class="form-control" required="required">
                 <?php foreach ($data_ruang as $key) { ?>
-                    <option value="<?= $key->id_jenis_ruang?>"><?= $key->nama_ruang?></option>
+                    <option value="<?= $key->id_jenis_ruang?>"<?php if( $id_ruangan == $key->id_jenis_ruang) echo'selected'; ?>><?= $key->nama_ruang?></option>
                 <?php }?>
             </select>
         </div>

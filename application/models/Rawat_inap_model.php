@@ -33,7 +33,7 @@ class Rawat_inap_model extends CI_Model
     }
 
     function Api_get_rawat_inap(){
-        $this->db->select('rawat_inap.id_rawat_inap,rawat_inap.id_ruangan,rawat_inap.ruangan,tindakan.id_dokter ,tindakan.nama_dokter,tindakan.id_pasien,tindakan.nama_pasien,tindakan.id_jenis_tindakan,tindakan.jenis_tindakan,penyakit.penyakit');
+        $this->db->select('rawat_inap.id_rawat_inap,rawat_inap.id_ruangan,rawat_inap.ruangan,tindakan.id_dokter ,tindakan.nama_dokter,tindakan.id_pasien,tindakan.nama_pasien,tindakan.id_jenis_tindakan,tindakan.jenis_tindakan,penyakit.penyakit,penyakit.id_penyakit');
         $this->db->from('rawat_inap');
         $this->db->join('tindakan','tindakan.id_tindakan = rawat_inap.id_tindakan');
         $this->db->join('penyakit','tindakan.id_penyakit  = penyakit.id_penyakit');
@@ -41,7 +41,7 @@ class Rawat_inap_model extends CI_Model
     }
 
     function Api_get_rawat_inap_Byid($id){
-        $this->db->select('rawat_inap.id_rawat_inap,rawat_inap.id_ruangan,rawat_inap.ruangan,tindakan.id_dokter ,tindakan.nama_dokter,tindakan.id_pasien,tindakan.nama_pasien,tindakan.id_jenis_tindakan,tindakan.jenis_tindakan,penyakit.penyakit');
+        $this->db->select('rawat_inap.id_rawat_inap,rawat_inap.id_ruangan,rawat_inap.ruangan,tindakan.id_dokter ,tindakan.nama_dokter,tindakan.id_pasien,tindakan.nama_pasien,tindakan.id_jenis_tindakan,tindakan.jenis_tindakan,penyakit.penyakit,penyakit.id_penyakit');
         $this->db->from('rawat_inap');
         $this->db->join('tindakan','tindakan.id_tindakan = rawat_inap.id_tindakan');
         $this->db->join('penyakit','tindakan.id_penyakit  = penyakit.id_penyakit');

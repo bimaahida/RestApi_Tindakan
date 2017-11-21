@@ -13,6 +13,42 @@ class Tindakan extends CI_Controller
         $this->load->library('datatables');
         $this->load->library('curl'); 
     }
+    public function test(){
+        $data = array(
+            'action' => site_url('tindakan/test_action'),
+        );
+        $this->load->view('tindakan/test', $data, FALSE);
+        
+    }
+    public function test_action(){
+        //  $data = array(
+        //     'id_data'    => '',
+        //     'id_tindakan'=> $this->input->post('id_tindakan'),
+        //     'id_penyakit'=> $this->input->post('id_penyakit'),
+        // );
+        $data_rest = array(
+            'id_data'             => '',
+            'tgl_tindakan'           => '1992-02-18',
+            'nama_pasien'          => 'bima',
+            'nama_dokter'          => 'dokter',
+            'keluhan'          => 'keluhan',
+            'penyakit'          => 'penyakit',
+            'jenis_tindakan'          => 'tindakan',
+            'status'          => 'status',
+        );
+        //var_dump($data);
+        $insert = $this->curl->simple_post('http://192.168.6.2/rekam_medik/api/rekamedik', $data_rest, array(CURLOPT_BUFFERSIZE => 10)); 
+        var_dump($insert);
+        if($insert)
+        {
+            echo 'data berhasil masuk';
+        }else
+        {
+           echo 'data gagal';
+        }                   
+    }
+
+
 
     public function index()
     {
@@ -53,14 +89,12 @@ class Tindakan extends CI_Controller
 
     public function create() 
     {
-
-        
         $this->load->model('Penyakit_model');
         $data_list = $this->Penyakit_model->get_all();
         
-        $data_pasien = json_decode($this->curl->simple_get('http://172.16.41.239/rs_pasien/index.php/pasien'));
-        $data_tindakan = json_decode($this->curl->simple_get('http://172.16.43.58:81/Keuangan/api/tindakan'));
-        $data_dokter = json_decode($this->curl->simple_get('http://172.16.44.121:81/sikepegawaian/index.php/dokter'));
+        $data_pasien = json_decode($this->curl->simple_get('http://192.168.3.2:8080/pasien/index.php/api/pasien'));
+        $data_tindakan = json_decode($this->curl->simple_get('http://192.168.8.2:81/keuangan/index.php/api/tindakan'));
+        $data_dokter = json_decode($this->curl->simple_get('http://192.168.4.2:8080/sikepegawaian/index.php/dokter'));
 
         $data = array(
             'button' => 'Create',
@@ -73,7 +107,7 @@ class Tindakan extends CI_Controller
             'id_pasien' => set_value('id_pasien'),
             'nama_pasien' => set_value('nama_pasien'),
             'tgl_tindakan' => set_value('tgl_tindakan'),
-            'id_jenis_tindakan' => set_value('id_jenis_tindakan'),
+            'id_jenis' => set_value('id_jenis_tindakan'),
             'jenis_tindakan' => set_value('jenis_tindakan'),
             'id_penyakit' => set_value('id_penyakit'),
             'resep' => set_value('resep'),
@@ -97,31 +131,43 @@ class Tindakan extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
+            
+            $this->load->model('Penyakit_model');
+            
+
             $status = $this->input->post('status',TRUE);
             $tgl_tindakan = $this->input->post('tgl_tindakan',TRUE);
+           
             $id_pasien = $this->input->post('pasien',TRUE);
             $id_tindakan = $this->input->post('jenis_tindakan',TRUE);
             $id_dokter = $this->input->post('nama_dokter',TRUE);
+            $id_penyakit = $this->input->post('id_penyakit',TRUE);
 
-            $data_pasien = json_decode($this->curl->simple_get('http://172.16.41.239/rs_pasien/index.php/pasien?id='.$id_pasien));
-            $data_tindakan = json_decode($this->curl->simple_get('http://172.16.43.58:81/Keuangan/api/tindakan?id='.$id_tindakan));
-            $data_dokter = json_decode($this->curl->simple_get('http://172.16.44.121:81/sikepegawaian/index.php/dokter?id='.$id_dokter));
+            $data_pasien = json_decode($this->curl->simple_get('http://192.168.3.2:8080/pasien/api/pasien?id='.$id_pasien));
+            $data_tindakan = json_decode($this->curl->simple_get('http://192.168.8.2:81/keuangan/index.php/api/tindakan?id='.$id_tindakan));
+            $data_dokter = json_decode($this->curl->simple_get('http://192.168.4.2:8080/sikepegawaian/index.php/dokter?id='.$id_dokter));
+            $data_penyakit = $this->Penyakit_model->get_by_id_api($id_penyakit);
             
             $nama = "";
             $nama_tindakan = "";
             $nama_dokter = "";
+            $nama_penyakit = "";
             
+
             foreach ($data_pasien as $key) {
                 $nama = $key->nama_pasien;
             }
             //var_dump($data_tindakan);
 
             foreach ($data_tindakan as $key) {
-                $nama_tindakan = $key->nama_jenis;
+                $nama_tindakan = $key->jenis_tindakan;
             }
             //var_dump($data_dokter);
             foreach ($data_dokter as $key) {
                 $nama_dokter = $key->nama_dokter;
+            }
+            foreach ($data_penyakit as $key ) {
+                $nama_penyakit = $key->penyakit;
             }
             $data = array(
                 'status' => $status,
@@ -136,9 +182,29 @@ class Tindakan extends CI_Controller
                 'id_penyakit' => $this->input->post('id_penyakit',TRUE),
                 'resep' => $this->input->post('resep',TRUE),
             );
-            var_dump($data);
+            //var_dump($data);
             $last_id =$this->Tindakan_model->insert($data);
-            
+            if($status == 0){
+                $st = "Rawat Jalan";
+            }else{
+                $st = "Rawat Inap";
+            }
+
+
+            $data_rest = array(
+                'id_data'         => $last_id,
+                'tgl_tindakan'    => $tgl_tindakan,
+                'nama_pasien'     => $nama,
+                'nama_dokter'     => $nama_dokter,
+                'keluhan'         => $this->input->post('keluhan',TRUE),
+                'penyakit'        => $nama_penyakit,
+                'jenis_tindakan'  => $nama_tindakan,
+                'status'          => $st,
+            );
+            //var_dump($data_rest);
+            $this->curl->simple_post('http://192.168.6.2/rekam_medik/api/rekamedik', $data_rest, array(CURLOPT_BUFFERSIZE => 10)); 
+
+
             if ($status == "0") {
                 $this->load->model('Rawat_jalan_model');
 
@@ -149,9 +215,9 @@ class Tindakan extends CI_Controller
                 $this->Rawat_jalan_model->insert($data);
                 $this->session->set_flashdata('message', 'Create Record Success');
                 //var_dump($data);
-                redirect(site_url('tindakan'));
+                redirect(site_url('rawat_jalan'));
             }else if ($status == "1"){
-                $data_ruang = json_decode($this->curl->simple_get('http://172.16.41.199/ofbiEnterpriseTemp/api/ruang_kosong'));
+                $data_ruang = json_decode($this->curl->simple_get('http://192.168.10.2/ofbi/index.php/api/ruang_kosong'));
                 $data = array(
                     'button' => 'Create',
                     'action' => site_url('rawat_inap/create_action'),
@@ -177,9 +243,9 @@ class Tindakan extends CI_Controller
         $this->load->model('Penyakit_model');
         $data_list = $this->Penyakit_model->get_all();
         
-        $data_pasien = json_decode($this->curl->simple_get('http://172.16.41.239/rs_pasien/index.php/pasien'));
-        $data_tindakan = json_decode($this->curl->simple_get('http://172.16.43.58:81/Keuangan/api/tindakan'));
-        $data_dokter = json_decode($this->curl->simple_get('http://172.16.44.121:81/sikepegawaian/index.php/dokter'));
+        $data_pasien = json_decode($this->curl->simple_get('http://192.168.3.2:8080/pasien/index.php/api/pasien'));
+        $data_tindakan = json_decode($this->curl->simple_get('http://192.168.8.2:81/keuangan/index.php/api/tindakan'));
+        $data_dokter = json_decode($this->curl->simple_get('http://192.168.4.2:8080/sikepegawaian/index.php/dokter'));
 
         $row = $this->Tindakan_model->get_by_id($id);
 
@@ -222,9 +288,9 @@ class Tindakan extends CI_Controller
         $id_tindakan = $this->input->post('jenis_tindakan',TRUE);
         $id_dokter = $this->input->post('nama_dokter',TRUE);
 
-        $data_pasien = json_decode($this->curl->simple_get('http://172.16.41.239/rs_pasien/index.php/pasien?id='.$id_pasien));
-        $data_tindakan = json_decode($this->curl->simple_get('http://172.16.43.58:81/Keuangan/api/tindakan?id='.$id_tindakan));
-        $data_dokter = json_decode($this->curl->simple_get('http://172.16.44.121:81/sikepegawaian/index.php/dokter?id='.$id_dokter));
+        $data_pasien = json_decode($this->curl->simple_get('http://192.168.3.2:8080/pasien/index.php/api/pasien?id='.$id_pasien));
+        $data_tindakan = json_decode($this->curl->simple_get('http://192.168.8.2:81/keuangan/index.php/api/tindakan?id='.$id_tindakan));
+        $data_dokter = json_decode($this->curl->simple_get('http://192.168.4.2:8080/sikepegawaian/index.php/dokter?id='.$id_dokter));
         
         $nama = "";
         $nama_tindakan = "";
@@ -236,7 +302,7 @@ class Tindakan extends CI_Controller
         //var_dump($data_tindakan);
 
         foreach ($data_tindakan as $key) {
-            $nama_tindakan = $key->nama_jenis;
+            $nama_tindakan = $key->jenis_tindakan;
         }
         //var_dump($data_dokter);
         foreach ($data_dokter as $key) {

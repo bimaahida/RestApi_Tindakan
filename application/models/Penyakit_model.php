@@ -38,6 +38,11 @@ class Penyakit_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+    function get_by_id_api($id){
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->result();
+    }
     
     // get total rows
     function total_rows($q = NULL) {

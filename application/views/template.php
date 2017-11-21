@@ -69,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="fa fa-bars"></i></a>
-                <div class="top-left-part"><a class="logo" href="index.html"><b><img src="<?= base_url() ?>assets/plugins/images/pixeladmin-logo.png" alt="home" /></b><span class="hidden-xs"><img src="<?= base_url() ?>assets/plugins/images/pixeladmin-text.png" alt="home" /></span></a></div>
+                <div class="top-left-part"><a class="logo" href="#"><b><img src="<?= base_url() ?>assets/plugins/images/pixeladmin-logo.png" alt="home" /></b><span class="hidden-xs"><img src="<?= base_url() ?>assets/plugins/images/pixeladmin-text.png" alt="home" /></span></a></div>
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
                         <a class="profile-pic" href="#"> <img src="<?= base_url() ?>assets/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b> </a>
@@ -88,16 +88,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>penyakit" class="waves-effect"><i class="fa fa-stethoscope fa-fw" aria-hidden="true"></i><span class="hide-menu">Penyakit</span></a>
+                        <a href="<?= base_url()?>index.php/penyakit" class="waves-effect"><i class="fa fa-stethoscope fa-fw" aria-hidden="true"></i><span class="hide-menu">Penyakit</span></a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>tindakan" class="waves-effect"><i class="fa fa-gavel fa-fw" aria-hidden="true"></i><span class="hide-menu">Jenis Tindakan</span></a>
+                        <a href="<?= base_url()?>index.php/tindakan" class="waves-effect"><i class="fa fa-gavel fa-fw" aria-hidden="true"></i><span class="hide-menu">Jenis Tindakan</span></a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>rawat_jalan" class="waves-effect"><i class="fa fa-ambulance fa-fw" aria-hidden="true"></i><span class="hide-menu">Rawat Jalan</span></a>
+                        <a href="<?= base_url()?>index.php/rawat_jalan" class="waves-effect"><i class="fa fa-ambulance fa-fw" aria-hidden="true"></i><span class="hide-menu">Rawat Jalan</span></a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>rawat_inap" class="waves-effect"><i class="fa fa-hospital-o fa-fw" aria-hidden="true"></i><span class="hide-menu">Rawat Inap</span></a>
+                        <a href="<?= base_url()?>index.php/rawat_inap" class="waves-effect"><i class="fa fa-hospital-o fa-fw" aria-hidden="true"></i><span class="hide-menu">Rawat Inap</span></a>
                     </li>
                 </ul>
             </div>
@@ -108,10 +108,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Penyakit </h4> </div>
+                        <h4 class="page-title"><?= $this->uri->segment(1)?> </h4> </div>
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
-                            <li class="active">Penyakit</li>
+                            <li class="active"><?= $this->uri->segment(1)?></li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
